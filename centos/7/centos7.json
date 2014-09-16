@@ -44,6 +44,27 @@
         "numvcpus": "1",
         "vhv.enable": "TRUE"
       }
+    },
+    {
+      "vm_name": "centos7",
+      "type": "parallels-iso",
+      "iso_url": "http://ftp.iij.ad.jp/pub/linux/centos/7.0.1406/isos/x86_64/CentOS-7.0-1406-x86_64-DVD.iso",
+      "iso_checksum": "713ea7847adcdd1700e92429f212721a",
+      "iso_checksum_type": "md5",
+      "parallels_tools_flavor": "lin",
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_wait_timeout": "1h",
+      "disk_size": "32768",
+      "shutdown_command": "echo 'vagrant' | sudo -S shutdown -P now",
+      "http_directory": "./http",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "prlctl": [
+        ["set", "{{.Name}}", "--memsize", "1024"],
+        ["set", "{{.Name}}", "--cpus", "2"]
+      ]
     }
   ],
   "provisioners": [
@@ -57,6 +78,7 @@
         "./scripts/sshd.sh",
         "./scripts/vbox.sh",
         "./scripts/vfusion.sh",
+        "./scripts/parallels.sh",
         "./scripts/cleanup.sh",
         "./scripts/zerofill.sh"
       ]
